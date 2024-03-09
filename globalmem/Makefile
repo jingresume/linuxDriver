@@ -4,7 +4,7 @@ CROSS_COMPILE=arm-linux-gnueabihf-
 export ARCH CROSS_COMPILE
 HOST_IP ?= 192.168.31.183
 
-obj-m := hellomodule.o calculation.o
+obj-m := globalmem.o
 
 all:
 	$(MAKE) -C $(KERNEL_DIR) M=$(CURDIR) modules
