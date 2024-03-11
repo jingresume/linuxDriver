@@ -105,11 +105,13 @@ static ssize_t led_chrdev_write(struct file* filp, const char __user * buf,
 {
     unsigned long val = 0;
     unsigned long ret = 0;
-
+    int res = 0;
     int tmp = count;
+    struct led_chrdev* led_cdev;
 
-    kstrtoul_from_user(buf, tmp, 10, &ret);
-    struct led_chrdev* led_cdev = (struct led_chrdev*)filp->private_data;
+    res = kstrtoul_from_user(buf, tmp, 10, &ret);
+   
+    led_cdev = (struct led_chrdev*)filp->private_data;
 
     val = ioread32(led_cdev->va_dr);
     if (ret == 0)

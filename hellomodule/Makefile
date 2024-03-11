@@ -12,7 +12,7 @@ all:
 .PHONE:clean copy
 
 clean:
-	$(MAKE) -C $(KERNEL_DIR) M=(CURDIR) clean
+	$(MAKE) -C $(KERNEL_DIR) M=$(CURDIR) clean
 
 copy:
 	scp *.ko debian@$(HOST_IP):/home/debian/

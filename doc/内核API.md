@@ -62,6 +62,7 @@ count：次设备号的数量
 struct device *device_create(struct class *class, struct device *parent,
             dev_t devt, void *drvdata, const char *fmt, ...)
 ```
+
 作用: 创建一个设备并将其注册到文件系统  
 
 + device_destroy  
