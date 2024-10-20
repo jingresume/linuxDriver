@@ -42,7 +42,7 @@ static ssize_t led_chr_dev_write(struct file* filp, const char __user *buf, size
 
     gpio_direction_output(rgb_led_red, !(write_data & 0x04));
     gpio_direction_output(rgb_led_green, !(write_data & 0x02));
-    gpio_direction_output(rgb_led_green, !(write_data & 0x01));
+    gpio_direction_output(rgb_led_blue, !(write_data & 0x01));
 
     return cnt;
 }
@@ -56,7 +56,6 @@ static struct file_operations led_chr_dev_fops =
 
 static int led_probe(struct platform_device* pdev)
 {
-    unsigned int register_data = 0;
     int ret = 0;
 
     printk(KERN_EMERG "\t match successed \n");
@@ -108,6 +107,15 @@ alloc_err:
     return -1;
 }
 
+static int led_remove(struct platform_device* pdev)
+{
+    device_destroy(class_led, led_devno);
+    class_destroy(class_led);
+    cdev_del(&led_chr_dev);
+    unregister_chrdev_region(led_devno, 1);
+    return 0;
+}
+
 static const struct of_device_id rgb_led[] = {
     {.compatible = "fire,rgb-led-gpio"},
     {}
@@ -115,6 +123,7 @@ static const struct of_device_id rgb_led[] = {
 
 struct platform_driver led_platform_driver = {
     .probe = led_probe,
+    .remove = led_remove,
     .driver = {
         .name = "rgb-leds-platform",
         .owner = THIS_MODULE,

@@ -2,7 +2,7 @@ KERNEL_DIR=../../ebf-buster-linux/build_image/build
 ARCH=arm
 CROSS_COMPILE=arm-linux-gnueabihf-
 export ARCH CROSS_COMPILE
-HOST_IP ?= 192.168.31.183
+HOST_IP ?= 192.168.31.247
 
 obj-m := rgb_led_gpio.o
 
