@@ -1,0 +1,26 @@
+@startuml I2C
+struct i2c_adapter 
+{
+    struct module *owner;
+    unsigned int class;               /* classes to allow probing for */
+    const struct i2c_algorithm *algo; /* the algorithm to access the bus */
+    void *algo_data;
+
+    /* data fields that are valid for all devices   */
+    struct rt_mutex bus_lock;
+
+    int timeout;                    /* in jiffies */
+    int retries;
+    struct device dev;              /* the adapter device */
+
+    int nr;
+    char name[48];
+    struct completion dev_released;
+
+    struct mutex userspace_clients_lock;
+    struct list_head userspace_clients;
+
+    struct i2c_bus_recovery_info *bus_recovery_info;
+    const struct i2c_adapter_quirks *quirks;
+}
+@enduml
